@@ -1,2 +1,23 @@
 # dse-java-krb
-Simple java example using Kerberos for authentication
+Simple example using Kerberos for authentication with the DataStax Java driver.
+
+# Pre-reqs
+
+1) DSE is configured for kerberos authentication (http://docs.datastax.com/en/latest-dse/datastax_enterprise/sec/kerberosTOC.html)
+2) You have a SPN and keytab with permission in DSE to create keyspaces
+3) Java JDK (with JCE installed if your keytab uses AES)
+
+# Installation
+
+1) git clone https://github.com/russkatz/dse-java-krb
+2) edit DseClient.config
+   a) set keyTab to your krb keytab file
+   b) set principal to your krb principal
+3) edit src/main/java/com/dse/demo/app/KrbTest.java
+   a) set "node" to an IP from your DSE cluster
+   b) set "sasl" to the principal username from service_principal in your dse.yaml file
+      i) most likely "dse" or "cassandra" depending on how you installed
+   c) set "krbclient" to your DseClient.conf JAAS configuration file
+4) Build the jar file: mvn package
+5) Run the jar: java -jar target/krbtest.jar
+6) If successful you will see: Bob Jones Austin bob@example.com 35
